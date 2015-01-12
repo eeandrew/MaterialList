@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/NoteCardView"
+    card_view:cardCornerRadius="@dimen/card_corner_radius" >
+    <!--Outline layout-->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <!--Photo thumnail-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/noteImage"/>
+        <!--Photo Title-->
+        <TextView
+            style="@style/CardTitle"
+            android:layout_alignBottom="@+id/noteImage"
+            android:id="@+id/noteTitle"
+            android:text="Title"/>
+        <!--Photo Description-->
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/noteDescription"
+            android:textColor="@color/description_color"
+            android:padding="@dimen/big_padding"
+            android:textSize="@dimen/description_size"
+            android:layout_below="@id/noteImage"
+            android:text="Test description"/>
+        <!--Divider-->
+        <View
+            android:id="@+id/cardDivider"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_grey"
+            android:layout_below="@id/noteDescription"
+            android:layout_alignLeft="@id/noteTitle"
+            android:layout_alignStart="@id/noteTitle"
+            android:visibility="visible"/>
+        <!--Left Edit button-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/left_edit_button"
+            android:layout_below="@id/noteDescription"
+            android:layout_marginTop="@dimen/big_padding"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:paddingLeft="@dimen/big_padding"
+            android:paddingRight="@dimen/big_padding"
+            android:paddingBottom="@dimen/small_padding"
+            android:text="@string/btn_edit"
+            style="@style/LeftButtonBaseStyle"/>
+        <!--Right Delete Button-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/right_text_button"
+            android:layout_toRightOf="@id/left_edit_button"
+            android:layout_alignBottom="@+id/left_edit_button"
+            android:paddingLeft="@dimen/small_padding"
+            android:paddingBottom="@dimen/small_padding"
+            android:text="@string/btn_delete"
+            style="@style/RightButtonBaseStyle"/>
+    <!--End Outline Layout-->
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

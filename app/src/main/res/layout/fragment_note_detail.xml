@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shanghai.works.ate.snapnote.ui.NoteDetailFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+
+        android:id="@+id/noteDetailImage"
+        android:maxHeight="200px"
+        android:layout_marginBottom="280dp" />
+
+    <ImageButton
+        android:layout_height="@dimen/normal_fab_size"
+        android:layout_width="@dimen/normal_fab_size"
+        android:id="@+id/note_edit_fab"
+        android:background="@drawable/normal_fab_ripple"
+        android:stateListAnimator="@anim/normal_fab_anim"
+        android:src="@drawable/ic_action_edit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/normal_fab_right_margin"
+        android:layout_marginBottom="@dimen/normal_fab_bottom_margin"
+        android:layout_gravity="right|center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/note_detail_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="150dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/note_detail_title"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="200dp"
+        android:layout_marginLeft="15dp" />
+
+</FrameLayout>

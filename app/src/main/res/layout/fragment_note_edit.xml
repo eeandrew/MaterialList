@@ -1,0 +1,24 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shanghai.works.ate.snapnote.ui.NoteEditFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <ImageButton
+        android:layout_height="@dimen/normal_fab_size"
+        android:layout_width="@dimen/normal_fab_size"
+        android:id="@+id/note_save_fab"
+        android:background="@drawable/normal_fab_ripple"
+        android:stateListAnimator="@anim/normal_fab_anim"
+        android:src="@drawable/ic_action_accept"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/normal_fab_right_margin"
+        android:layout_marginBottom="@dimen/normal_fab_bottom_margin"
+        android:layout_gravity="right|center_vertical" />
+
+</FrameLayout>

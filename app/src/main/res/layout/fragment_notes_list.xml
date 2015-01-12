@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:layout_height="@dimen/normal_fab_size"
+        android:layout_width="@dimen/normal_fab_size"
+        android:id="@+id/camera_fab"
+        android:background="@drawable/normal_fab_ripple"
+        android:stateListAnimator="@anim/normal_fab_anim"
+        android:src="@drawable/ic_action_camera"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/normal_fab_right_margin"
+        android:layout_marginBottom="@dimen/normal_fab_bottom_margin"
+        />
+
+    <!-- ListFragment对应的android:id值固定为"@id/android:list" -->
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+
+</RelativeLayout>
