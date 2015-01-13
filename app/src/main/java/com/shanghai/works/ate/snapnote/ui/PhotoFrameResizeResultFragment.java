@@ -1,6 +1,8 @@
 package com.shanghai.works.ate.snapnote.ui;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.shanghai.works.ate.snapnote.R;
 import com.shanghai.works.ate.snapnote.ui.view.ImageTrimView;
@@ -16,56 +19,56 @@ import com.shanghai.works.ate.snapnote.ui.view.ImageTrimView;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeFragment.OnFragmentInteractionListener} interface
+ * {@link com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeResultFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeFragment#newInstance} factory method to
+ * Use the {@link com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeResultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PhotoFrameResizeFragment extends Fragment {
+public class PhotoFrameResizeResultFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private ImageButton photoResizeOK;
-
-    private ImageTrimView imageTrimView;
     private OnFragmentInteractionListener mListener;
+    private ImageView photoResizeResultImage;
+    private ImageButton photoResizeResultOK;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param photoUrl Parameter 1.
-     * @return A new instance of fragment PhotoFrameResizeFragmentOld.
-     */
+    private byte[] mParam1;
+    private String mParam2;
+
     // TODO: Rename and change types and number of parameters
-    public static PhotoFrameResizeFragment newInstance(String photoUrl, String param2) {
-        PhotoFrameResizeFragment fragment = new PhotoFrameResizeFragment();
+    public static PhotoFrameResizeResultFragment newInstance(byte[] image) {
+        PhotoFrameResizeResultFragment fragment = new PhotoFrameResizeResultFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, photoUrl);
-        args.putString(ARG_PARAM2, param2);
+        args.putByteArray(ARG_PARAM1, image);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public PhotoFrameResizeFragment() {
+    public PhotoFrameResizeResultFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            mParam1 = getArguments().getByteArray(ARG_PARAM1);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View photoFrameResizeLayout = inflater.inflate(R.layout.fragment_photo_frame_resize, container, false);
-        photoResizeOK = (ImageButton)photoFrameResizeLayout.findViewById(R.id.photo_resize_ok);
-        imageTrimView = (ImageTrimView) photoFrameResizeLayout.findViewById(R.id.image_trim_view);
+        View photoFrameResizeResultLayout = inflater.inflate(R.layout.fragment_photo_frame_resize_result, container, false);
+        photoResizeResultOK = (ImageButton) photoFrameResizeResultLayout.findViewById(R.id.photo_resize_result_ok);
+        photoResizeResultImage = (ImageView) photoFrameResizeResultLayout.findViewById(R.id.photo_resize_result_image);
+
+        Bitmap bmp = BitmapFactory.decodeByteArray(mParam1, 0, mParam1.length);
+        Log.d("", "byte array length: " + mParam1.length);
+        photoResizeResultImage.setImageBitmap(bmp);
         setUpClickListenerForOKBtn(null);
-        return photoFrameResizeLayout;
+        return photoFrameResizeResultLayout;
     }
 
 
@@ -98,20 +101,16 @@ public class PhotoFrameResizeFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onPhotoFrameResizeFragmentOKButtonClickInteraction(Uri uri);
+        public void onPhotoFrameResizeResultFragmentOKButtonClickInteraction();
     }
 
-    public byte[] getTrimmedImage() {
-        return this.imageTrimView.getTrimmedImage();
-    }
 
 
     private void setUpClickListenerForOKBtn(final Uri uri){
-        photoResizeOK.setOnClickListener(new View.OnClickListener() {
+        photoResizeResultOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mListener.onPhotoFrameResizeFragmentOKButtonClickInteraction(uri);
-            Log.d("", "OK Btn Clicked.");
+                mListener.onPhotoFrameResizeResultFragmentOKButtonClickInteraction();
             }
         });
     }

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.dexafree.materialList.cards.model.SnapNoteMainCard;
 import com.dexafree.materialList.controller.MaterialListViewAdapter;
 import com.dexafree.materialList.controller.OnDismissCallback;
 import com.dexafree.materialList.controller.SwipeDismissListener;
@@ -55,10 +57,11 @@ public class MaterialListView extends ListView implements IMaterialView {
                         new SwipeDismissListener.OnDismissCallback () {
 							@Override
 							public void onDismiss(IMaterialView listView, final Card[] reverseSortedCards) {
+
 								for (Card dismissedCard : reverseSortedCards) {
 									int position = getAdapter().getPosition(dismissedCard);
-									//Log.d(getClass().getSimpleName(), dismissedCard.getmTitle() +
-									// " [Position="+position+"]");
+									Log.d("onDismiss", ((SnapNoteMainCard)dismissedCard).getTitle() +
+                                            " [Position=" + position + "]");
 
 									if (mDismissCallback != null) {
 										mDismissCallback.onDismiss(dismissedCard, position);
@@ -113,27 +116,34 @@ public class MaterialListView extends ListView implements IMaterialView {
 
 		switch (type) {
 			case ALPHA_IN: {
-				AnimationAdapter animationAdapter = new AlphaInAnimationAdapter(baseAdapter);
+                Log.d("setCardAnimation","ALPHA_IN");
+                AnimationAdapter animationAdapter = new AlphaInAnimationAdapter(baseAdapter);
 				animationAdapter.setAbsListView(this);
 				baseAdapter = animationAdapter;
 			} break;
 			case SCALE_IN: {
-				AnimationAdapter animationAdapter = new ScaleInAnimationAdapter(baseAdapter);
+                Log.d("setCardAnimation","SCALE_IN");
+                AnimationAdapter animationAdapter = new ScaleInAnimationAdapter(baseAdapter);
 				animationAdapter.setAbsListView(this);
 				baseAdapter = animationAdapter;
 			} break;
 			case SWING_BOTTOM_IN: {
+                Log.d("setCardAnimation","SWING_BOTTOM_IN");
 				AnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(baseAdapter);
 				animationAdapter.setAbsListView(this);
 				baseAdapter = animationAdapter;
 			} break;
 			case SWING_LEFT_IN: {
-				AnimationAdapter animationAdapter = new SwingLeftInAnimationAdapter(baseAdapter);
+                Log.d("setCardAnimation","SWING_LEFT_IN");
+
+                AnimationAdapter animationAdapter = new SwingLeftInAnimationAdapter(baseAdapter);
 				animationAdapter.setAbsListView(this);
 				baseAdapter = animationAdapter;
 			} break;
 			case SWING_RIGHT_IN: {
-				AnimationAdapter animationAdapter = new SwingRightInAnimationAdapter(baseAdapter);
+                Log.d("setCardAnimation","SWING_RIGHT_IN");
+
+                AnimationAdapter animationAdapter = new SwingRightInAnimationAdapter(baseAdapter);
 				animationAdapter.setAbsListView(this);
 				baseAdapter = animationAdapter;
 			} break;

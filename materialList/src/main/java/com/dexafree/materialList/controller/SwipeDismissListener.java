@@ -1,6 +1,7 @@
 package com.dexafree.materialList.controller;
 
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.dexafree.materialList.cards.model.Card;
+import com.dexafree.materialList.cards.model.SnapNoteMainCard;
 import com.dexafree.materialList.view.IMaterialView;
 import com.dexafree.materialList.view.MaterialListView;
 import com.nineoldandroids.animation.Animator;
@@ -126,7 +128,7 @@ public class SwipeDismissListener implements View.OnTouchListener {
 
         switch (motionEvent.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
-
+                Log.d("onTouch","ACTION_DOWN");
                 if (mPaused) {
                     return false;
                 }
@@ -136,6 +138,7 @@ public class SwipeDismissListener implements View.OnTouchListener {
                 // Find the child view that was touched (perform a hit test)
                 Rect rect = new Rect();
                 int childCount = mListView.getChildCount();
+                Log.d("onTouch","childCount " + childCount);
                 int[] listViewCoords = new int[2];
                 mListView.getLocationOnScreen(listViewCoords);
                 int x = (int) motionEvent.getRawX() - listViewCoords[0];
@@ -154,6 +157,7 @@ public class SwipeDismissListener implements View.OnTouchListener {
                 if (mDownView != null) {
                     mDownX = motionEvent.getRawX();
                     mSelectedCard = (Card) mDownView.getTag();
+                    Log.d("onTouch",((SnapNoteMainCard)mSelectedCard).getTitle());
                     mVelocityTracker = VelocityTracker.obtain();
                     mVelocityTracker.addMovement(motionEvent);
                 }
@@ -162,6 +166,8 @@ public class SwipeDismissListener implements View.OnTouchListener {
             }
 
             case MotionEvent.ACTION_UP: {
+                Log.d("onTouch","ACTION_UP");
+
                 if (mVelocityTracker == null) {
                     break;
                 }
@@ -196,6 +202,7 @@ public class SwipeDismissListener implements View.OnTouchListener {
                             .setListener(new AnimatorListenerAdapter() {
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
+                                    Log.d("onAnimationEnd",mSelectedCard + "");
                                     performDismiss(downView, mSelectedCard);
                                 }
                             });
@@ -217,6 +224,8 @@ public class SwipeDismissListener implements View.OnTouchListener {
             }
 
             case MotionEvent.ACTION_MOVE: {
+                Log.d("onTouch","ACTION_MOVE");
+
                 if (mSelectedCard != null && mSelectedCard.isDismissible()) {
                     if (mVelocityTracker == null || mPaused) {
                         break;
@@ -254,6 +263,8 @@ public class SwipeDismissListener implements View.OnTouchListener {
         public View view;
 
         public PendingDismissData(int position, View view) {
+            Log.d("PendingDismissData",position+"");
+            Log.d("PendingDismissData",((SnapNoteMainCard)view.getTag()).getTitle());
             this.position = position;
             this.view = view;
         }
@@ -266,7 +277,7 @@ public class SwipeDismissListener implements View.OnTouchListener {
     }
 
     public void dismissCard(final View downView, final Card card){
-
+        Log.d("dismissCard","call dismiss card");
         float viewWidth = downView.getMeasuredWidth();
 
         ++mDismissAnimationRefCount;
@@ -286,7 +297,7 @@ public class SwipeDismissListener implements View.OnTouchListener {
         // Animate the dismissed list item to zero-height and fire the dismiss callback when
         // all dismissed list item animations have completed. This triggers layout on each animation
         // frame; in the future we may want to do something smarter and more performant.
-
+        //Log.d("performDismiss",((SnapNoteMainCard)card).getTitle());
         final ViewGroup.LayoutParams lp = dismissView.getLayoutParams();
         final int originalHeight = dismissView.getHeight();
 

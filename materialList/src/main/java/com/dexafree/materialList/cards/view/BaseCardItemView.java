@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.MyRoundRectDrawableWithShadow;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.dexafree.materialList.R;
@@ -30,7 +31,6 @@ public abstract class BaseCardItemView<T extends Card> extends LinearLayout {
 	public void build(T card) {
 	    // Background Color
         CardView cardView = (CardView) findViewById(R.id.cardView);
-
         if(cardView != null) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 MyRoundRectDrawableWithShadow backgroundDrawable = new MyRoundRectDrawableWithShadow(

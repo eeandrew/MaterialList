@@ -3,12 +3,15 @@ package com.dexafree.materialList.controller;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.dexafree.materialList.cards.model.Card;
+import com.dexafree.materialList.cards.model.SnapNoteMainCard;
 import com.dexafree.materialList.cards.view.BaseCardItemView;
+import com.dexafree.materialList.cards.view.SnapNoteMainCardItemView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +29,16 @@ public class MaterialListViewAdapter extends ArrayAdapter<Card> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup){
+        if(position == -1){
+            return null;
+        }
+        Log.d("getView",position+"");
         Card card = getItem(position);
-
+        Log.d("getView",card.getClass().toString());
         if(convertView == null || !convertView.getTag().getClass().isInstance(card)) {
             for(Class<?> classType : mClassList) {
                 if(classType.isInstance(card)){
+                    Log.d("getView","layout " + card.getLayout()+"");
                     convertView = View.inflate(getContext(), card.getLayout(), null);
                     convertView.setTag(card);
                     break;
@@ -38,8 +46,12 @@ public class MaterialListViewAdapter extends ArrayAdapter<Card> {
             }
         }
 
-        if (((BaseCardItemView)convertView) != null) {
-            ((BaseCardItemView)convertView).build(card);
+        if (((SnapNoteMainCardItemView)convertView) != null) {
+            Log.d("getView","layout2 " + card.getLayout()+"");
+            Log.d("getView",((SnapNoteMainCard)card).getTitle());
+            Log.d("getView",((SnapNoteMainCard)card).getNoteTagFirst());
+            Log.d("getView",((SnapNoteMainCard)card).getNoteOCRContent());
+            ((SnapNoteMainCardItemView)convertView).build((SnapNoteMainCard) card);
         }
 
         return convertView;
@@ -89,7 +101,13 @@ public class MaterialListViewAdapter extends ArrayAdapter<Card> {
     }
 
     public void remove(Card card) {
+        Log.d("remove",card.getClass().toString());
         super.remove(card);
+
+        for(int i=0;i<super.getCount();i++){
+          Log.d("After Remove",super.getItem(i).getClass().toString());
+          Log.d("After Remove", ((SnapNoteMainCard) super.getItem(i)).getTitle());
+        }
         if(!mDeletedList.contains(card.getClass())){
             mDeletedList.add(card.getClass());
         }
@@ -97,12 +115,16 @@ public class MaterialListViewAdapter extends ArrayAdapter<Card> {
 
     @Override
     public int getItemViewType (int position){
+        Log.d("getItemViewType","Item position " + position);
+        Log.d("getItemViewType","MyCLassListSize " + mClassList.size());
 		if(position > -1 && position < getCount()) {
 			for (int i = 0; i < mClassList.size(); i++) {
 				Class cl = mClassList.get(i);
+                Log.d("getItemViewType","Item Type " + cl);
 				if (cl.isInstance(getItem(position))) return i;
 			}
 		}
+        Log.d("getItemViewType","Item Type " + -1);
         return -1;
     }
 

@@ -18,14 +18,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dexafree.materialList.cards.model.BigImageButtonsCard;
 import com.dexafree.materialList.cards.model.Card;
+import com.dexafree.materialList.cards.model.SnapNoteMainCard;
 import com.dexafree.materialList.controller.OnButtonPressListener;
 import com.dexafree.materialList.controller.OnDismissCallback;
 import com.dexafree.materialList.controller.OnImageViewPressListener;
+import com.dexafree.materialList.events.DismissEvent;
+import com.dexafree.materialList.view.IMaterialView;
 import com.dexafree.materialList.view.MaterialListView;
 import com.shanghai.works.ate.snapnote.R;
 import com.shanghai.works.ate.snapnote.model.SnapNote;
-import com.shanghai.works.ate.snapnote.model.customcard.SnapNoteMainCard;
 import com.shanghai.works.ate.snapnote.service.PhotoService;
 import com.shanghai.works.ate.snapnote.ui.adapter.CardListAdapter;
 import com.shanghai.works.ate.snapnote.ui.anim.AnimateUtil;
@@ -94,27 +97,6 @@ public class NoteCardsFragment extends Fragment {
         }
     }
 
-    private void loadSnapNoteFromLocalStorage(){
-        snapNotes = new ArrayList<>();
-        SnapNote note1 = new SnapNote();
-        note1.setImagePath(String.valueOf(R.drawable.card_sample));
-        note1.setTitle("Irland Travel");
-        note1.setContent("Spring here is beutiful");
-        note1.setDate(System.currentTimeMillis());
-        snapNotes.add(note1);
-        SnapNote note2 = new SnapNote();
-        note2.setImagePath(String.valueOf(R.drawable.card_sample_2));
-        note2.setTitle("NewYear Firework");
-        note2.setContent("What a wonderful night");
-        note2.setDate(System.currentTimeMillis());
-        snapNotes.add(note2);
-        SnapNote note3 = new SnapNote();
-        note3.setImagePath(String.valueOf(R.drawable.card_sample_3));
-        note3.setTitle("The Lightning");
-        note3.setContent("First night alone");
-        note3.setDate(System.currentTimeMillis());
-        snapNotes.add(note3);
-    }
 
     private void setUpCardListAdapter(){
         cardListAdapter = new CardListAdapter(getActivity(),snapNotes);
@@ -156,34 +138,50 @@ public class NoteCardsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View noteCardsFragmentLayout = inflater.inflate(R.layout.fragment_note_cards, container, false);
-//        cardsContainer = (RecyclerView) noteCardsFragmentLayout.findViewById(R.id.cardListContainer);
-//        cardsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        loadSnapNoteFromLocalStorage();
-//        setUpCardListAdapter();
-
-
         materialListView = (MaterialListView)noteCardsFragmentLayout.findViewById(R.id.material_card_list);
+        materialListView.setCardAnimation(IMaterialView.CardAnimation.SCALE_IN);
+        materialListView.setOnDismissCallback(new OnDismissCallback() {
+            @Override
+            public void onDismiss(Card card, int position) {
 
-        final SnapNoteMainCard card1 = new SnapNoteMainCard(getActivity());
-        card1.setTitle("Irland Travel");
-        card1.setDescription("Spring here is beutiful");
-        card1.setDrawable(R.drawable.card_sample);
-        card1.setNoteTagFirst("Tag First");
-        card1.setNoteTagSecond("Tag Second");
-        card1.setNoteTagThird("Tag Third");
-        card1.setNoteOCRContent("Spring here is beutiful");
-        card1.setNoteTakenTime("April 10");
-        card1.setEditButtonText("EDIT");
-        card1.setDeleteButtonText("DELETE");
-        card1.setShowDivider(true);
-        card1.setOnDeleteButtonPressedListener(new OnButtonPressListener() {
+            }
+        });
+        //Load SnapNote Here
+        loadSnapNoteFromLocalStorage(materialListView);
+        cameraFab = (ImageButton)noteCardsFragmentLayout.findViewById(R.id.card_camera_fab);
+        setUpListenerForCameraFab();
+        return noteCardsFragmentLayout;
+    }
+
+    private void loadSnapNoteFromLocalStorage(MaterialListView materialListView){
+        for(int i=0;i<30;i++){
+            SnapNote snapNote = new SnapNote();
+            snapNote.setContent("Sample Content");
+            snapNote.setTitle("Sample Title");
+            materialListView.add(generateSnapNote(snapNote));
+        }
+    }
+
+
+    private SnapNoteMainCard generateSnapNote(SnapNote snapNote){
+        SnapNoteMainCard card = new SnapNoteMainCard(getActivity());
+        card.setDrawable(R.drawable.card_sample);
+        card.setTitle(snapNote.getTitle());
+        card.setNoteTagFirst("Tag1");
+        card.setNoteTagSecond("Tag2");
+        card.setNoteTagThird("Tag3");
+        card.setNoteOCRContent(snapNote.getContent());
+        card.setNoteTakenTime("April 2014");
+        card.setEditButtonText("EDIT");
+        card.setDeleteButtonText("DELETE");
+        card.setOnDeleteButtonPressedListener(new OnButtonPressListener() {
             @Override
             public void onButtonPressedListener(View view,Card card) {
                 Toast.makeText(getActivity(), "On Delete", Toast.LENGTH_SHORT).show();
                 card.dismiss();
             }
         });
-        card1.setOnFavoriateButtonPressedListener(new OnImageViewPressListener() {
+        card.setOnFavoriateButtonPressedListener(new OnImageViewPressListener() {
             private boolean isMyFavorite = false;
             @Override
             public void onButtonPressedListener(ImageView imageView) {
@@ -191,65 +189,8 @@ public class NoteCardsFragment extends Fragment {
                 isMyFavorite = !isMyFavorite;
             }
         });
-        materialListView.add(card1);
-
-        SnapNoteMainCard card2 = new SnapNoteMainCard(getActivity());
-        card2.setTitle("NewYear Firework");
-        card2.setDescription("What a wonderful night");
-        card2.setDrawable(R.drawable.card_sample_2);
-        card2.setNoteTagFirst("Tag First");
-        card2.setNoteTagSecond("Tag Second");
-        card2.setNoteTagThird("Tag Third");
-        card2.setNoteOCRContent("What a wonderful night");
-        card2.setNoteTakenTime("April 10");
-        card2.setEditButtonText("EDIT");
-        card2.setDeleteButtonText("DELETE");
-        card2.setShowDivider(true);
-        materialListView.add(card2);
-
-        SnapNoteMainCard card3 = new SnapNoteMainCard(getActivity());
-        card3.setTitle("The Lightning");
-        card3.setDescription("First night alone");
-        card3.setDrawable(R.drawable.card_sample_3);
-        card3.setNoteTagFirst("Tag First");
-        card3.setNoteTagSecond("Tag Second");
-        card3.setNoteTagThird("Tag Third");
-        card3.setNoteOCRContent("First night alone");
-        card3.setNoteTakenTime("April 10");
-        card3.setEditButtonText("EDIT");
-        card3.setDeleteButtonText("DELETE");
-        card3.setShowDivider(true);
-        materialListView.add(card3);
-
-        materialListView.setOnDismissCallback(new OnDismissCallback() {
-            @Override
-            public void onDismiss(Card card, int position) {
-
-            }
-        });
-
-//        BigImageButtonsCard card2 = new BigImageButtonsCard();
-//        card2.setTitle("NewYear Firework");
-//        card2.setDescription("What a wonderful night");
-//        card2.setBitmap(getResources().getDrawable(R.drawable.card_sample_2));
-//        card2.setLeftButtonText("EDIT");
-//        card2.setRightButtonText("DELETE");
-//        materialListView.add(card2);
-//
-//        BigImageButtonsCard card3 = new BigImageButtonsCard();
-//        card3.setTitle("The Lightning");
-//        card3.setDescription("First night alone");
-//        card3.setBitmap(getResources().getDrawable(R.drawable.card_sample_3));
-//        card3.setLeftButtonText("EDIT");
-//        card3.setRightButtonText("DELETE");
-//        materialListView.add(card3);
-
-        cameraFab = (ImageButton)noteCardsFragmentLayout.findViewById(R.id.card_camera_fab);
-        setUpListenerForCameraFab();
-        return noteCardsFragmentLayout;
+        return card;
     }
-
-
 
     @Override
     public void onAttach(Activity activity) {

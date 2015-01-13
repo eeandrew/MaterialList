@@ -1,8 +1,6 @@
 package com.shanghai.works.ate.snapnote;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -16,15 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
 
-import com.shanghai.works.ate.snapnote.service.PhotoService;
 import com.shanghai.works.ate.snapnote.ui.NavigationDrawerFragment;
 import com.shanghai.works.ate.snapnote.ui.NoteCardsFragment;
 import com.shanghai.works.ate.snapnote.ui.NoteDetailFragment;
 import com.shanghai.works.ate.snapnote.ui.NoteEditFragment;
 import com.shanghai.works.ate.snapnote.ui.NotesListFragment;
 import com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeFragment;
+import com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeFragmentOld;
+import com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeResultFragment;
 import com.shanghai.works.ate.snapnote.ui.PhotoTakingFragment;
 
 
@@ -35,8 +33,10 @@ public class MainActivity extends ActionBarActivity
         PhotoTakingFragment.OnFragmentInteractionListener,
         NoteEditFragment.OnFragmentInteractionListener,
         PhotoFrameResizeFragment.OnFragmentInteractionListener,
-        NoteCardsFragment.OnFragmentInteractionListener{
+        NoteCardsFragment.OnFragmentInteractionListener,
+        PhotoFrameResizeResultFragment.OnFragmentInteractionListener {
 
+    PhotoFrameResizeFragment resizeFragment;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -46,10 +46,6 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +65,11 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, NoteCardsFragment.newInstance("",""))
-                .commit();
+                .commit();*/
+        displayPhotoFrameResizeFragment(null);
     }
 
 
@@ -125,6 +122,7 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -189,7 +187,8 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onPhotoFrameResizeFragmentOKButtonClickInteraction(Uri uri){
-        displayNoteEditFragment("You need to edit this photo");
+        //displayNoteEditFragment("You need to edit this photo");
+        displayPhotoFrameResizeResultFragment();
     }
 
     public void onNoteCardsFragmentCameraFabClickInteraction(){
@@ -198,12 +197,24 @@ public class MainActivity extends ActionBarActivity
     }
 
 
+    @Override
+    public void onPhotoFrameResizeResultFragmentOKButtonClickInteraction() {
+        displayPhotoFrameResizeFragment(null);
+    }
+
+    private void displayPhotoFrameResizeResultFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PhotoFrameResizeResultFragment.newInstance(resizeFragment.getTrimmedImage()))
+                .commit();
+    }
 
 
     private void displayPhotoFrameResizeFragment(Uri uri){
+        resizeFragment = PhotoFrameResizeFragment.newInstance("to be determined", "to be determined");
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PhotoFrameResizeFragment.newInstance("to be determined", "to be determined"))
+                .replace(R.id.container, resizeFragment)
                 .commit();
     }
 

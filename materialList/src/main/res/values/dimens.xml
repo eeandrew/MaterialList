@@ -20,4 +20,6 @@
 
     <dimen name="big_padding">16dp</dimen>
     <dimen name="small_padding">8dp</dimen>
+
+    <dimen name="quick_button_size">20dp</dimen>
 </resources>

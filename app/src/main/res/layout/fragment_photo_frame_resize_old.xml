@@ -1,0 +1,104 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/photo_resize_frame"
+    tools:context="com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeFragmentOld">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/image"
+        android:layout_gravity="center"
+        android:src="@drawable/photo_1"
+        android:contentDescription="@string/hello_blank_fragment" />
+
+    <ImageButton
+        android:layout_height="@dimen/normal_fab_size"
+        android:layout_width="@dimen/normal_fab_size"
+        android:id="@+id/photo_resize_ok_old"
+        android:background="@drawable/normal_fab_ripple"
+        android:stateListAnimator="@anim/normal_fab_anim"
+        android:src="@drawable/ic_action_accept"
+        android:layout_marginRight="@dimen/normal_fab_right_margin"
+        android:layout_marginBottom="@dimen/normal_fab_bottom_margin"
+        android:layout_gravity="right|bottom"
+        android:translationZ="1dp" />
+
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:id="@+id/photo_resize_north_mask"
+        android:layout_gravity="center_horizontal|top"
+        android:background="#ff0b0b0b"
+        android:alpha="0" />
+
+    <SurfaceView
+        android:layout_width="@dimen/normal_fab_size"
+        android:layout_height="251dp"
+        android:id="@+id/photo_resize_west_mask"
+        android:layout_gravity="left|center_vertical"
+        android:background="#ff0b0b0b"
+        android:alpha="0" />
+
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:id="@+id/photo_resize_south_mask"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="#ff0b0b0b"
+        android:alpha="0" />
+
+    <SurfaceView
+        android:layout_width="96dp"
+        android:layout_height="245dp"
+        android:id="@+id/photo_resize_east_mask"
+        android:layout_gravity="right|center_vertical"
+        android:background="#ff0b0b0b"
+        android:alpha="0" />
+
+    <SurfaceView
+        android:layout_width="193dp"
+        android:layout_height="166dp"
+        android:id="@+id/photo_resize_center_mask"
+        android:layout_gravity="center"
+        android:alpha="0.5"
+        android:translationZ="1dp"
+        android:background="#ffff121b" />
+
+    <SurfaceView
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:background="@drawable/normal_bar"
+        android:id="@+id/photo_resize_north_bar"
+        android:layout_gravity="center"
+        android:translationZ="2dp"
+        android:alpha="0.5" />
+
+    <SurfaceView
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:background="@drawable/normal_bar"
+        android:id="@+id/photo_resize_south_bar"
+        android:layout_gravity="center"
+        android:translationZ="2dp"
+        android:alpha="0.5" />
+
+    <SurfaceView
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:background="@drawable/normal_bar"
+        android:id="@+id/photo_resize_west_bar"
+        android:layout_gravity="center"
+        android:translationZ="2dp"
+        android:alpha="0.5" />
+
+    <SurfaceView
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:background="@drawable/normal_bar"
+        android:id="@+id/photo_resize_east_bar"
+        android:layout_gravity="center"
+        android:translationZ="2dp"
+        android:alpha="0.5" />
+</FrameLayout>

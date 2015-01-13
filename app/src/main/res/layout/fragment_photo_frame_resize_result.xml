@@ -3,20 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/photo_resize_frame"
-    tools:context="com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeFragment">
+    tools:context="com.shanghai.works.ate.snapnote.ui.PhotoFrameResizeResultFragment">
 
-    <com.shanghai.works.ate.snapnote.ui.view.ImageTrimView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/image_trim_view"
-        android:layout_gravity="center"
-        android:src="@drawable/photo_1"
-        android:contentDescription="@string/hello_blank_fragment" />
+        android:id="@+id/photo_resize_result_image"/>
 
     <ImageButton
         android:layout_height="@dimen/normal_fab_size"
         android:layout_width="@dimen/normal_fab_size"
-        android:id="@+id/photo_resize_ok"
+        android:id="@+id/photo_resize_result_ok"
         android:background="@drawable/normal_fab_ripple"
         android:stateListAnimator="@anim/normal_fab_anim"
         android:src="@drawable/ic_action_accept"

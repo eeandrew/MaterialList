@@ -1,11 +1,10 @@
-package com.shanghai.works.ate.snapnote.model.customcard;
+package com.dexafree.materialList.cards.model;
 
 import android.content.Context;
 
-import com.dexafree.materialList.cards.model.ExtendedCard;
+import com.dexafree.materialList.R;
 import com.dexafree.materialList.controller.OnButtonPressListener;
 import com.dexafree.materialList.controller.OnImageViewPressListener;
-import com.shanghai.works.ate.snapnote.R;
 
 /**
  * Created by zhoulin on 2015/1/8.

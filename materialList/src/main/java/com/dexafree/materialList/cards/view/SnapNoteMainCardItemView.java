@@ -1,21 +1,19 @@
-package com.shanghai.works.ate.snapnote.view;
+package com.dexafree.materialList.cards.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageButton;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dexafree.materialList.cards.view.BaseButtonsCardItemView;
-import com.shanghai.works.ate.snapnote.R;
-import com.shanghai.works.ate.snapnote.model.customcard.SnapNoteMainCard;
+import com.dexafree.materialList.R;
+import com.dexafree.materialList.cards.model.SnapNoteMainCard;
+
 
 /**
  * Created by zhoulin on 2015/1/8.
@@ -49,6 +47,7 @@ public class SnapNoteMainCardItemView extends BaseButtonsCardItemView<SnapNoteMa
 
     @Override
     public void build(final SnapNoteMainCard card) {
+        super.build(card);
         Log.d("SnapNoteMainCardItemView",card.getTitle());
         setTitle(card.getTitle());
         setImage(card.getDrawable());
@@ -77,6 +76,7 @@ public class SnapNoteMainCardItemView extends BaseButtonsCardItemView<SnapNoteMa
     }
 
     public void setNoteTakenTime(String noteTakenTimeString){
+        Log.d("setNoteTakenTime",noteTakenTimeString);
         noteTakenTime = (TextView) findViewById(R.id.noteTakenTimeTextView);
         noteTakenTime.setText(noteTakenTimeString);
     }
@@ -97,6 +97,7 @@ public class SnapNoteMainCardItemView extends BaseButtonsCardItemView<SnapNoteMa
     }
 
     public void setNoteOCRContent(String noteOCRContentString){
+        Log.d("setNoteOCRContent",noteOCRContentString);
         noteOCRContent = (TextView) findViewById(R.id.noteOCRContentTextView);
         noteOCRContent.setText(noteOCRContentString);
     }
@@ -161,29 +162,22 @@ public class SnapNoteMainCardItemView extends BaseButtonsCardItemView<SnapNoteMa
         divider.setVisibility(visibility);
 
         // After setting the visibility, we prepare the divider params according to the preferences
-        if(card.getShowDivider()){
+        // After setting the visibility, we prepare the divider params according to the preferences
+        if(card.isDividerVisible()){
 
             // If the divider has to be from side to side, the margin will be 0
-            if(card.getFullDividerLength()) {
-                ((RelativeLayout.LayoutParams) divider.getLayoutParams()).setMargins(0, 0, 0, 0);
+            if(card.isFullWidthDivider()) {
+                ((ViewGroup.MarginLayoutParams) divider.getLayoutParams()).setMargins(0, 0, 0, 0);
             } else {
-
-                // Convert DP to PX
-                int dividerMarginPx = (int) TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        DIVIDER_MARGIN_DP,
-                        getContext().getResources().getDisplayMetrics()
-                );
-
+                int dividerMarginPx = (int) dpToPx(DIVIDER_MARGIN_DP);
                 // Set the margin
-                ((RelativeLayout.LayoutParams) divider.getLayoutParams()).setMargins(
+                ((ViewGroup.MarginLayoutParams) divider.getLayoutParams()).setMargins(
                         dividerMarginPx,
                         0,
                         dividerMarginPx,
                         0
                 );
             }
-
         }
     }
 

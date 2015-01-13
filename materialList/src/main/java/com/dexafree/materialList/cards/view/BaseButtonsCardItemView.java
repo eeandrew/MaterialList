@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,28 +34,31 @@ public abstract class BaseButtonsCardItemView<T extends ExtendedCard> extends Ba
 
         // Left Button - Text
         final TextView leftText = (TextView) findViewById(R.id.left_text_button);
-        leftText.setText(card.getLeftButtonText().toUpperCase());
-        leftText.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                card.getOnLeftButtonPressedListener().onButtonPressedListener(leftText, card);
-            }
-        });
-
-        // Right Button - Text
-        final TextView rightText = (TextView) findViewById(R.id.right_text_button);
-        rightText.setText(card.getRightButtonText().toUpperCase());
-        if(card.getRightButtonTextColor() > -1) {
-            rightText.setTextColor(card.getRightButtonTextColor());
+        if(leftText != null) {
+            leftText.setText(card.getLeftButtonText().toUpperCase());
+            leftText.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    card.getOnLeftButtonPressedListener().onButtonPressedListener(leftText, card);
+                }
+            });
         }
-        rightText.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                card.getOnRightButtonPressedListener().onButtonPressedListener(rightText, card);
+        final TextView rightText = (TextView) findViewById(R.id.right_text_button);
+        if(rightText != null) {
+            // Right Button - Text
+            rightText.setText(card.getRightButtonText().toUpperCase());
+            if (card.getRightButtonTextColor() > -1) {
+                rightText.setTextColor(card.getRightButtonTextColor());
             }
-        });
+            rightText.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    card.getOnRightButtonPressedListener().onButtonPressedListener(rightText, card);
+                }
+            });
+        }
 
-        // Divider
+//        // Divider
         int visibility = card.isDividerVisible()? VISIBLE : INVISIBLE;
 
         View divider = findViewById(R.id.cardDivider);
@@ -66,11 +70,11 @@ public abstract class BaseButtonsCardItemView<T extends ExtendedCard> extends Ba
 
             // If the divider has to be from side to side, the margin will be 0
             if(card.isFullWidthDivider()) {
-                ((LinearLayout.LayoutParams) divider.getLayoutParams()).setMargins(0, 0, 0, 0);
+                ((ViewGroup.MarginLayoutParams) divider.getLayoutParams()).setMargins(0, 0, 0, 0);
             } else {
                 int dividerMarginPx = (int) dpToPx(DIVIDER_MARGIN_DP);
                 // Set the margin
-                ((LinearLayout.LayoutParams) divider.getLayoutParams()).setMargins(
+                ((ViewGroup.MarginLayoutParams) divider.getLayoutParams()).setMargins(
                         dividerMarginPx,
                         0,
                         dividerMarginPx,
